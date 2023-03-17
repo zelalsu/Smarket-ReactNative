@@ -10,8 +10,10 @@ const Title = () => {
             <Text>İcon</Text>
           </View>
           <View>
-            <Text>Teslim için</Text>
-            <Text>Atıf bey mah Doktor saylan cad...</Text>
+            <Text style={{color: '#fff'}}>Teslim için</Text>
+            <Text style={{color: '#fff'}}>
+              Atıf bey mah Doktor saylan cad...
+            </Text>
           </View>
         </View>
         <View>
