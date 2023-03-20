@@ -10,7 +10,7 @@ import SplashScreen from '../screens/SplashScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function Home() {
+function TabNavigator() {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -26,11 +26,7 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{headerShown: false}}
-        />
+        <Stack.Screen name="TabNavigator" component={TabNavigator} />
         <Stack.Screen
           name="ProductScreen"
           options={{gestureDirection: 'horizontal'}}

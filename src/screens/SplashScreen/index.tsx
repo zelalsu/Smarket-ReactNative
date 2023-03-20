@@ -1,17 +1,59 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../store';
+import {postData} from '../../utils/helper';
+import {setCategories} from '../../store/category';
+import {setProducts} from '../../store/product';
+import style from './style';
 
-const SplashScreen = () => {
+const base = 'https://smarket.nonoco.dev/';
+export const baseUrl = base + 'apps/';
+export const baseCategoryImageUrl = base + 'storage/categories/';
+export const baseProductImageUrl = base + 'storage/products/';
+export const baseCampaignsImageUrl = base + 'storage/campaigns/';
+
+const SplashScreen = ({navigation}: {navigation: any}) => {
+  const products = useAppSelector(state => state.product.products);
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(state => state.category.categories);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isLoading, setisLoading] = useState(false);
+
+  useEffect(() => {
+    setisLoading(true);
+    if (categories.length === 0 || products.length === 0) {
+      postData({
+        url: `${baseUrl}sm-login-register`,
+        requestData: {phone: '5418581704'},
+      }).then(res => {
+        postData({
+          url: `${baseUrl}sm-verify-code`,
+          requestData: {phone: res.phone, code: '1111'},
+        }).then(response => {
+          // setUser(response.userInfo); //redux at
+          postData({
+            url: `${baseUrl}sm-get-categories-and-products`,
+            requestData: {_token: response.userInfo.authToken},
+          }).then(productsAndCategories => {
+            dispatch(setCategories(productsAndCategories.categories));
+            dispatch(setProducts(productsAndCategories.products));
+            setisLoading(false);
+            navigation.navigate('TabNavigator');
+          });
+        });
+      });
+    } else {
+      setTimeout(() => {
+        navigation.navigate('TabNavigator');
+      }, 1000);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
-      <View
-        // eslint-disable-next-line react-native/no-inline-styles
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#fff',
-        }}>
+      <View style={style.container}>
         <Image
           resizeMode="contain"
           source={require('../../../assets/icons/icon.png')}
@@ -26,5 +68,4 @@ const SplashScreen = () => {
     </>
   );
 };
-
 export default SplashScreen;
