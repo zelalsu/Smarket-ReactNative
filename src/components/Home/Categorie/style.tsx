@@ -2,12 +2,15 @@ import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
   container: {
-    backgroundColor: '#ECEDEE',
+    backgroundColor: '#fff',
     marginTop: 20,
-    alignItems: 'center',
-    marginRight: 10,
-    marginLeft: 10,
     borderRadius: 8,
+    borderWidth: 1,
+  },
+  innerContainer: {
+    flexDirection: 'row',
+    width: 187,
+    height: 70,
   },
 });
 export default style;

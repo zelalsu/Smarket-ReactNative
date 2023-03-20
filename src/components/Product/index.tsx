@@ -1,10 +1,11 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-const Product = () => {
+const Product = ({route}: {route: any}) => {
+  const {title} = route.params;
   return (
     <View>
-      <Text>index</Text>
+      <Text>{title}</Text>
     </View>
   );
 };

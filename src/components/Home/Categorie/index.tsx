@@ -18,9 +18,6 @@ const Categorie = ({navigation}: {navigation: any}) => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(state => state.category.categories);
   const products = useAppSelector(state => state.product.products);
-  // const [isLoading, setIsLoading] = useState(true);
-
-  //helper
 
   //splah screen
   useEffect(() => {
@@ -58,32 +55,46 @@ const Categorie = ({navigation}: {navigation: any}) => {
         data={categories}
         estimatedItemSize={200}
         renderItem={({item}) => (
-          <View
-            // eslint-disable-next-line react-native/no-inline-styles
-            style={style.container}>
-            <View
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{
-                flexDirection: 'row',
-                width: 187,
-                height: 70,
-              }}>
+          <View style={style.container}>
+            <View style={style.innerContainer}>
               <View
                 style={{
-                  justifyContent: 'flex-start',
                   alignItems: 'center',
-                  flexDirection: 'row',
-                  padding: 12,
                 }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View>
                   <TouchableOpacity
-                    onPress={navigation.navigate('ProductScreen')}>
-                    <Text style={{color: 'black'}}>{item.title}</Text>
-                    <Image
-                      source={{uri: `${baseCategoryImageUrl}${item.image}`}}
-                      style={{width: 50, height: 50, marginLeft: 10}}
-                      resizeMode={'center'}
-                    />
+                    onPress={() =>
+                      navigation.navigate('ProductScreen', {
+                        categoryId: item.category_guid,
+                        title: item.title,
+                      })
+                    }>
+                    <View style={{flexDirection: 'row'}}>
+                      <View
+                        style={{
+                          justifyContent: 'center',
+
+                          marginLeft: 10,
+                          width: 100,
+                        }}>
+                        <Text style={{color: 'black'}}>{item.title}</Text>
+                      </View>
+
+                      <View
+                        style={{
+                          width: 75,
+                          height: 75,
+                          justifyContent: 'center',
+                        }}>
+                        <Image
+                          source={{
+                            uri: `${baseCategoryImageUrl}${item.image}`,
+                          }}
+                          style={{width: 50, height: 50}}
+                          resizeMode={'center'}
+                        />
+                      </View>
+                    </View>
                   </TouchableOpacity>
                 </View>
               </View>
