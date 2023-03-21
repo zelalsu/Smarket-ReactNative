@@ -1,21 +1,31 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, TouchableOpacity, Image, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+  Dimensions,
+  Image,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useAppSelector} from '../../store/index';
 import style from './style';
 import {ProductsParams} from '../../components/Product/type';
+import {useDispatch} from 'react-redux';
+import {addToCart} from '../../store/product';
 
 const base = 'https://smarket.nonoco.dev/';
 export const baseUrl = base + 'apps/';
 export const baseProductImageUrl = base + 'storage/products/';
 
-const ProductScreen = ({route}: {route: any}) => {
+const ProductScreen = ({route}: {route: any; navigation: any}) => {
   const [subCategoryId, setSubCategoryId] = useState<string | undefined>();
   const {categoryId, title} = route.params;
-
+  const dispatch = useDispatch();
   const categories = useAppSelector(state => state.category.categories);
   const products = useAppSelector(state => state.product.products);
+  // const [count, setCount] = useState(1);
 
   const filteredCategories = React.useMemo(
     () =>
@@ -41,6 +51,11 @@ const ProductScreen = ({route}: {route: any}) => {
   const handleSubcategoryPress = (subcategoryGuid: string) => {
     setSubCategoryId(subcategoryGuid);
   };
+  const handleAddToCart = (productId: string) => {
+    const productToAdd = products.find(p => p.product_guid === productId);
+
+    dispatch(addToCart(productToAdd));
+  };
 
   return (
     <>
@@ -54,12 +69,13 @@ const ProductScreen = ({route}: {route: any}) => {
               keyExtractor={item => item.id.toString()}
               estimatedItemSize={200}
               horizontal={true}
+              extraData={style}
               renderItem={({item}) => (
                 <View>
                   <TouchableOpacity
                     onPress={() => handleSubcategoryPress(item.category_guid)}>
                     <View style={style.innerCategory}>
-                      <Text style={{color: '#fff'}}>{item.title}</Text>
+                      <Text style={style.altCategory}>{item.title}</Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -79,23 +95,25 @@ const ProductScreen = ({route}: {route: any}) => {
                   <View style={{alignItems: 'center'}}>
                     <View style={style.container}>
                       <View>
-                        <Image
+                        <ImageBackground
                           source={{uri: `${baseProductImageUrl}${item.image}`}}
-                          style={{
-                            width: 100,
-                            height: 100,
-                          }}
-                          resizeMode={'center'}
-                        />
+                          style={style.imageSize}
+                          resizeMode={'center'}>
+                          <TouchableOpacity
+                            onPress={() => handleAddToCart(item.product_guid)}>
+                            <Image
+                              style={style.plusSize}
+                              source={require('../../../assets/icons/plus.png')}
+                            />
+                          </TouchableOpacity>
+                        </ImageBackground>
                       </View>
                     </View>
                     <View style={{width: 100}}>
                       <Text numberOfLines={1} style={style.text}>
                         {item.title}
                       </Text>
-                      <Text numberOfLines={1} style={style.text}>
-                        ₺{item.price}
-                      </Text>
+                      <Text style={style.text}>₺{item.price}</Text>
                     </View>
                   </View>
                 </>

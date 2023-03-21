@@ -1,19 +1,19 @@
 import {View, Text, TextInput, ImageBackground, ScrollView} from 'react-native';
 import React from 'react';
 import style from './style';
+import {Image} from 'react-native';
+
 const Title = () => {
   return (
     <>
       <View style={style.container}>
         <View style={style.innerContainer}>
           <View style={{marginRight: 20}}>
-            <Text>İcon</Text>
+            <Image source={require('../../../../assets/icons/iconW.png')} />
           </View>
           <View>
-            <Text style={{color: '#fff'}}>Teslim için</Text>
-            <Text style={{color: '#fff'}}>
-              Atıf bey mah Doktor saylan cad...
-            </Text>
+            <Text style={style.text}>Teslim için</Text>
+            <Text style={style.text}>Atıf bey mah Doktor saylan cad...</Text>
           </View>
         </View>
         <View>
@@ -30,8 +30,8 @@ const Title = () => {
                     style.img,
                     // eslint-disable-next-line react-native/no-inline-styles
                     {
-                      marginRight: 16,
-                      marginLeft: index === 0 ? 16 : 0,
+                      marginRight: 10,
+                      marginLeft: index === 0 ? 8 : 0,
                     },
                   ]}
                   source={require('../../../../assets/images/banner.png')}>

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../store';
 import {postData} from '../../utils/helper';
 import {setCategories} from '../../store/category';
@@ -17,11 +17,8 @@ const SplashScreen = ({navigation}: {navigation: any}) => {
   const products = useAppSelector(state => state.product.products);
   const dispatch = useAppDispatch();
   const categories = useAppSelector(state => state.category.categories);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
-    setisLoading(true);
     if (categories.length === 0 || products.length === 0) {
       postData({
         url: `${baseUrl}sm-login-register`,
@@ -38,7 +35,6 @@ const SplashScreen = ({navigation}: {navigation: any}) => {
           }).then(productsAndCategories => {
             dispatch(setCategories(productsAndCategories.categories));
             dispatch(setProducts(productsAndCategories.products));
-            setisLoading(false);
             navigation.navigate('TabNavigator');
           });
         });

@@ -22,6 +22,10 @@ const style = StyleSheet.create({
     margin: 10,
     borderRadius: 8,
   },
+  altCategory: {
+    color: '#fff',
+    fontFamily: 'Montserrat-Medium',
+  },
   text: {
     color: 'black',
     fontSize: 12,
@@ -32,6 +36,14 @@ const style = StyleSheet.create({
     fontSize: 22,
     marginLeft: 10,
     color: '#fff',
+  },
+  imageSize: {width: 100, height: 100},
+  plusSize: {
+    width: 31,
+    height: 31,
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
 });
 export default style;
