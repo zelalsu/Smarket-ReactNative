@@ -1,19 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  Dimensions,
-  Image,
-} from 'react-native';
+import {View, Text, TouchableOpacity, ImageBackground} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useAppSelector} from '../../store/index';
 import style from './style';
 import {ProductsParams} from '../../components/Product/type';
 import {useDispatch} from 'react-redux';
-import {addToCart} from '../../store/product';
+import {addToCart} from '../../store/basket';
 
 const base = 'https://smarket.nonoco.dev/';
 export const baseUrl = base + 'apps/';
@@ -25,8 +18,6 @@ const ProductScreen = ({route}: {route: any; navigation: any}) => {
   const dispatch = useDispatch();
   const categories = useAppSelector(state => state.category.categories);
   const products = useAppSelector(state => state.product.products);
-  // const [count, setCount] = useState(1);
-
   const filteredCategories = React.useMemo(
     () =>
       categories.find(item => {
@@ -48,34 +39,51 @@ const ProductScreen = ({route}: {route: any; navigation: any}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredCategories]);
 
-  const handleSubcategoryPress = (subcategoryGuid: string) => {
-    setSubCategoryId(subcategoryGuid);
-  };
-  const handleAddToCart = (productId: string) => {
-    const productToAdd = products.find(p => p.product_guid === productId);
-
-    dispatch(addToCart(productToAdd));
-  };
-
   return (
     <>
       <View style={{backgroundColor: '#fff', flex: 1}}>
         <View style={style.categoryContainer}>
-          <View style={{marginRight: 20}}>
+          <View>
             <Text style={style.title}>{title}</Text>
             <FlashList
+              contentContainerStyle={{paddingLeft: 20}}
               data={filteredCategories?.subcats}
               showsHorizontalScrollIndicator={false}
               keyExtractor={item => item.id.toString()}
               estimatedItemSize={200}
               horizontal={true}
-              extraData={style}
+              extraData={[style, subCategoryId]}
               renderItem={({item}) => (
                 <View>
                   <TouchableOpacity
-                    onPress={() => handleSubcategoryPress(item.category_guid)}>
-                    <View style={style.innerCategory}>
-                      <Text style={style.altCategory}>{item.title}</Text>
+                    activeOpacity={0.8}
+                    onPress={() => setSubCategoryId(item.category_guid)}>
+                    <View
+                      style={[
+                        style.innerCategory,
+                        {
+                          backgroundColor:
+                            subCategoryId === item.category_guid
+                              ? 'white'
+                              : '#296EE4',
+                          borderColor:
+                            subCategoryId === item.category_guid
+                              ? 'transparent'
+                              : 'white',
+                        },
+                      ]}>
+                      <Text
+                        style={[
+                          style.altCategory,
+                          {
+                            color:
+                              subCategoryId === item.category_guid
+                                ? '#296EE4'
+                                : 'white',
+                          },
+                        ]}>
+                        {item.title}
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -83,7 +91,7 @@ const ProductScreen = ({route}: {route: any; navigation: any}) => {
             />
           </View>
         </View>
-        <View style={{flex: 1, width: Dimensions.get('screen').width}}>
+        <View style={{flex: 1, paddingLeft: 15, paddingRight: 15}}>
           {filteredProducts.length > 0 && (
             <FlashList<ProductsParams>
               data={filteredProducts}
@@ -92,28 +100,40 @@ const ProductScreen = ({route}: {route: any; navigation: any}) => {
               numColumns={3}
               renderItem={({item}) => (
                 <>
-                  <View style={{alignItems: 'center'}}>
+                  <View
+                    style={{
+                      flex: 1,
+                      marginLeft: 8,
+                      marginTop: 19,
+                      marginBottom: 22,
+                    }}>
                     <View style={style.container}>
-                      <View>
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
                         <ImageBackground
                           source={{uri: `${baseProductImageUrl}${item.image}`}}
                           style={style.imageSize}
                           resizeMode={'center'}>
                           <TouchableOpacity
-                            onPress={() => handleAddToCart(item.product_guid)}>
-                            <Image
-                              style={style.plusSize}
-                              source={require('../../../assets/icons/plus.png')}
-                            />
+                            activeOpacity={0.8}
+                            onPress={() => dispatch(addToCart(item))}>
+                            <View style={style.plusSize}>
+                              <Text style={style.plusText}>+</Text>
+                            </View>
                           </TouchableOpacity>
                         </ImageBackground>
                       </View>
                     </View>
-                    <View style={{width: 100}}>
+
+                    <View style={{width: 100, justifyContent: 'center'}}>
                       <Text numberOfLines={1} style={style.text}>
                         {item.title}
                       </Text>
-                      <Text style={style.text}>₺{item.price}</Text>
+                      <Text style={{fontSize: 10}}>Adet</Text>
+                      <Text style={style.price}>₺{item.price} </Text>
                     </View>
                   </View>
                 </>

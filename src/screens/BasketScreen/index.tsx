@@ -1,21 +1,118 @@
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-
+import style from './style';
 import {useAppSelector} from '../../store';
+import {addToCart, removeToCart} from '../../store/basket';
+import {useDispatch} from 'react-redux';
+import {decreaseQuantity} from '../../store/basket';
+import {FlashList} from '@shopify/flash-list';
+const base = 'https://smarket.nonoco.dev/';
+export const baseProductImageUrl = base + 'storage/products/';
 
 const BasketScreen = () => {
-  const cart = useAppSelector(state => state.product.cart);
+  const cart = useAppSelector(state => state.basket.cart);
+  const totalAmount = useAppSelector(state => state.basket.totalAmount);
+
+  const dispatch = useDispatch();
+  const clearAsyncStorage = async () => {
+    dispatch(removeToCart());
+  };
 
   return (
-    <FlatList
-      data={cart}
-      renderItem={({item}) => (
-        <View key={item.product_guid}>
-          <Text>{item.title}</Text>
+    <>
+      <View style={style.back}>
+        <View style={style.container}>
+          <View style={style.title}>
+            <Text style={style.text}>Sepetim</Text>
+          </View>
+          <FlashList
+            estimatedItemSize={100}
+            data={cart}
+            extraData={style}
+            ListEmptyComponent={<Text>Sepetiniz Boş...</Text>}
+            renderItem={({item}) => (
+              <View style={style.card} key={item.product_guid}>
+                <View style={style.image}>
+                  <Image
+                    source={{
+                      uri: `${baseProductImageUrl}${item.image}`,
+                    }}
+                    style={style.imageSize}
+                    resizeMode={'center'}
+                  />
+                </View>
+
+                <View style={style.productTitle}>
+                  <View style={style.pTitle}>
+                    <Text numberOfLines={1} style={style.pText}>
+                      {item.title}
+                    </Text>
+                    <Text style={style.amount}> ₺{item.amount}</Text>
+                  </View>
+                </View>
+
+                <View style={style.countContainer}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => dispatch(addToCart(item))}
+                    style={style.decrease_increase}>
+                    <Text style={style.decrease_increase_size}>+</Text>
+                  </TouchableOpacity>
+                  <Text style={style.count}>{item.quantity}</Text>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => dispatch(decreaseQuantity(item))}
+                    style={style.decrease_increase}>
+                    <Text style={style.decrease_increase_size}>-</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+            keyExtractor={item => item.product_guid}
+          />
         </View>
-      )}
-      keyExtractor={item => item.product_guid}
-    />
+      </View>
+      <View style={style.containerTotal}>
+        <View style={style.totalAmount}>
+          <View style={style.total}>
+            <Text style={style.textAmount}>Toplam İndirim: </Text>
+            <View style={{flex: 1, alignItems: 'flex-end'}}>
+              <Text style={style.textAmount}>-₺</Text>
+            </View>
+          </View>
+          <View style={style.total}>
+            <Text style={style.textAmount}>Sepet Tutarı</Text>
+            <View style={{flex: 1, alignItems: 'flex-end'}}>
+              <Text style={style.textAmount}>₺{totalAmount}</Text>
+            </View>
+          </View>
+          <View>
+            <TouchableOpacity activeOpacity={0.8}>
+              <View style={style.complate}>
+                <Text style={style.textComplate}>Siparişi Tamamla</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity onPress={clearAsyncStorage} activeOpacity={0.8}>
+              <View
+                style={[
+                  style.complate,
+                  {
+                    backgroundColor: '#baba',
+                    width: 200,
+                    height: 40,
+                    marginTop: 20,
+                    marginLeft: 80,
+                  },
+                ]}>
+                <Text style={style.textComplate}>Tüm Ürünleri Sil</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </>
   );
 };
 

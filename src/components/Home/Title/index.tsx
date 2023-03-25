@@ -8,7 +8,7 @@ const Title = () => {
     <>
       <View style={style.container}>
         <View style={style.innerContainer}>
-          <View style={{marginRight: 20}}>
+          <View style={{marginRight: 18}}>
             <Image source={require('../../../../assets/icons/iconW.png')} />
           </View>
           <View>
@@ -30,8 +30,8 @@ const Title = () => {
                     style.img,
                     // eslint-disable-next-line react-native/no-inline-styles
                     {
-                      marginRight: 10,
-                      marginLeft: index === 0 ? 8 : 0,
+                      marginRight: 16,
+                      marginLeft: index === 0 ? 16 : 0,
                     },
                   ]}
                   source={require('../../../../assets/images/banner.png')}>

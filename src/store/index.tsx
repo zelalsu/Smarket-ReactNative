@@ -4,6 +4,7 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import productReducer from './product';
 // import userReducer from './user';
 import categoryReducer from './category';
+import basketReducer from './basket';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {configureStore} from '@reduxjs/toolkit';
 import {persistReducer} from 'redux-persist';
@@ -12,12 +13,13 @@ const reducers = combineReducers({
   product: productReducer,
   // user: userReducer,
   category: categoryReducer,
+  basket: basketReducer,
 });
 const persistConfig = {
   //verilerin nasıl depolanacağı ve anahtarların saklanması, sadece logini anahtarı saklanır şuan(white)
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['category', 'product'],
+  whitelist: ['category', 'product', 'basket'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

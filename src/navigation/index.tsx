@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import HomeScreen from './../screens/HomeScreen';
-import ProductScreen from './../screens/ProductScreen';
+import ProductScreen from '../screens/ProductScreen';
 import SplashScreen from '../screens/SplashScreen';
 import BasketScreen from './../screens/BasketScreen/index';
 

@@ -15,10 +15,12 @@ const style = StyleSheet.create({
   innerContainer: {
     flexDirection: 'row',
     marginTop: 62,
-    marginLeft: 23,
+    marginLeft: 16,
   },
   img: {
-    width: 379,
+    overflow: 'hidden',
+    width: 370,
+    borderRadius: 8,
     height: 135,
     marginTop: 45,
   },
