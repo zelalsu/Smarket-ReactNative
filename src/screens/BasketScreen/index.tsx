@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import style from './style';
@@ -6,6 +7,7 @@ import {addToCart, removeToCart} from '../../store/basket';
 import {useDispatch} from 'react-redux';
 import {decreaseQuantity} from '../../store/basket';
 import {FlashList} from '@shopify/flash-list';
+import {basketBottomHeight} from '../../constants';
 const base = 'https://smarket.nonoco.dev/';
 export const baseProductImageUrl = base + 'storage/products/';
 
@@ -27,7 +29,9 @@ const BasketScreen = () => {
           </View>
           <FlashList
             estimatedItemSize={100}
+            showsVerticalScrollIndicator={false}
             data={cart}
+            contentContainerStyle={{paddingBottom: basketBottomHeight + 16}}
             extraData={style}
             ListEmptyComponent={<Text>Sepetiniz Boş...</Text>}
             renderItem={({item}) => (
@@ -47,7 +51,8 @@ const BasketScreen = () => {
                     <Text numberOfLines={1} style={style.pText}>
                       {item.title}
                     </Text>
-                    <Text style={style.amount}> ₺{item.amount}</Text>
+                    <Text>200 mg</Text>
+                    <Text style={style.amount}>₺{item.amount}</Text>
                   </View>
                 </View>
 
@@ -72,43 +77,44 @@ const BasketScreen = () => {
           />
         </View>
       </View>
-      <View style={style.containerTotal}>
-        <View style={style.totalAmount}>
-          <View style={style.total}>
-            <Text style={style.textAmount}>Toplam İndirim: </Text>
-            <View style={{flex: 1, alignItems: 'flex-end'}}>
-              <Text style={style.textAmount}>-₺</Text>
-            </View>
-          </View>
-          <View style={style.total}>
-            <Text style={style.textAmount}>Sepet Tutarı</Text>
-            <View style={{flex: 1, alignItems: 'flex-end'}}>
-              <Text style={style.textAmount}>₺{totalAmount}</Text>
-            </View>
-          </View>
-          <View>
-            <TouchableOpacity activeOpacity={0.8}>
-              <View style={style.complate}>
-                <Text style={style.textComplate}>Siparişi Tamamla</Text>
+
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          height: basketBottomHeight,
+        }}>
+        <View style={style.empty}>
+          <TouchableOpacity
+            style={{flexDirection: 'row'}}
+            onPress={clearAsyncStorage}
+            activeOpacity={0.8}>
+            <Image source={require('../../../assets/icons/trash.png')} />
+            <Text style={style.emptyText}>Tüm Ürünleri Sil</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={style.containerTotal}>
+          <View style={style.totalAmount}>
+            <View style={style.total}>
+              <Text style={style.textAmount}>Toplam İndirim: </Text>
+              <View style={{flex: 1, alignItems: 'flex-end'}}>
+                <Text style={style.textAmount}>-₺</Text>
               </View>
-            </TouchableOpacity>
-          </View>
-          <View>
-            <TouchableOpacity onPress={clearAsyncStorage} activeOpacity={0.8}>
-              <View
-                style={[
-                  style.complate,
-                  {
-                    backgroundColor: '#baba',
-                    width: 200,
-                    height: 40,
-                    marginTop: 20,
-                    marginLeft: 80,
-                  },
-                ]}>
-                <Text style={style.textComplate}>Tüm Ürünleri Sil</Text>
+            </View>
+            <View style={style.total}>
+              <Text style={style.textAmount}>Sepet Tutarı</Text>
+              <View style={{flex: 1, alignItems: 'flex-end'}}>
+                <Text style={style.textAmount}>₺{totalAmount}</Text>
               </View>
-            </TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity activeOpacity={0.8}>
+                <View style={[style.complate]}>
+                  <Text style={style.textComplate}>Siparişi Tamamla</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, TouchableOpacity, ImageBackground} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {FlashList} from '@shopify/flash-list';
 import {useAppSelector} from '../../store/index';
@@ -113,19 +113,18 @@ const ProductScreen = ({route}: {route: any; navigation: any}) => {
                           alignItems: 'center',
                           justifyContent: 'center',
                         }}>
-                        <ImageBackground
+                        <Image
                           source={{uri: `${baseProductImageUrl}${item.image}`}}
                           style={style.imageSize}
-                          resizeMode={'center'}>
-                          <TouchableOpacity
-                            activeOpacity={0.8}
-                            onPress={() => dispatch(addToCart(item))}>
-                            <View style={style.plusSize}>
-                              <Text style={style.plusText}>+</Text>
-                            </View>
-                          </TouchableOpacity>
-                        </ImageBackground>
+                          resizeMode={'center'}
+                        />
                       </View>
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        style={style.plusSize}
+                        onPress={() => dispatch(addToCart(item))}>
+                        <Text style={style.plusText}>+</Text>
+                      </TouchableOpacity>
                     </View>
 
                     <View style={{width: 100, justifyContent: 'center'}}>

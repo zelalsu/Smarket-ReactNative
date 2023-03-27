@@ -9,10 +9,10 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     width: window.width - 32,
-    marginBottom: 10,
   },
   title: {
     marginTop: 39,
+    marginBottom: 20,
   },
   text: {
     fontSize: 20,
@@ -46,6 +46,7 @@ const style = StyleSheet.create({
   productTitle: {
     marginLeft: 12,
     fontSize: 14,
+    marginTop: 14,
   },
   pTitle: {
     width: 145,
@@ -89,7 +90,8 @@ const style = StyleSheet.create({
     color: 'black',
   },
   amount: {
-    marginTop: 26,
+    marginTop: 4,
+
     fontSize: 16,
     color: 'black',
     fontFamily: 'Montserrat-Bold',
@@ -100,8 +102,6 @@ const style = StyleSheet.create({
   totalAmount: {
     height: 189,
     margin: 10,
-
-    backgroundColor: '#fff',
   },
   total: {
     flexDirection: 'row',
@@ -124,6 +124,25 @@ const style = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontFamily: 'Montserrat-Bold',
+  },
+  empty: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    width: 167,
+    height: 42,
+    marginLeft: 107,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 17,
+    borderWidth: 1,
+    borderColor: '#B9BEC5',
+  },
+  emptyText: {
+    color: '#7C8086',
+    fontFamily: 'Montserrat-Bold',
+    fontSize: 12,
+    marginLeft: 8,
+    textTransform: 'uppercase',
   },
 });
 export default style;

@@ -30,7 +30,7 @@ const style = StyleSheet.create({
   title: {
     marginTop: 50,
     fontFamily: 'Montserrat-Bold',
-    fontSize: 22,
+    fontSize: 16,
     paddingLeft: 20,
     color: '#fff',
   },

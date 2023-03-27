@@ -7,3 +7,5 @@ export const window = {
   height,
   width,
 };
+
+export const basketBottomHeight = 220;
