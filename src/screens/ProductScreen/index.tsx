@@ -7,10 +7,7 @@ import style from './style';
 import {ProductsParams} from '../../components/Product/type';
 import {useDispatch} from 'react-redux';
 import {addToCart} from '../../store/basket';
-
-const base = 'https://smarket.nonoco.dev/';
-export const baseUrl = base + 'apps/';
-export const baseProductImageUrl = base + 'storage/products/';
+import {baseProductImageUrl} from '../../constants';
 
 const ProductScreen = ({route}: {route: any; navigation: any}) => {
   const [subCategoryId, setSubCategoryId] = useState<string | undefined>();

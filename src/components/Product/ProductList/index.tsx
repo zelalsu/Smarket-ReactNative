@@ -14,11 +14,7 @@ import {useAppSelector} from '../../../store';
 import {addToCart} from '../../../store/basket';
 import {ProductsParams} from '../type';
 import style from '../../../screens/ProductScreen/style';
-import {window} from './../../../constants/index';
-
-const base = 'https://smarket.nonoco.dev/';
-export const baseUrl = base + 'apps/';
-export const baseProductImageUrl = base + 'storage/products/';
+import {baseProductImageUrl, window} from './../../../constants';
 
 const ProductList = ({route}: {route: any}) => {
   const products = useAppSelector(state => state.product.products);

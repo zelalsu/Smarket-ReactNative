@@ -9,3 +9,9 @@ export const window = {
 };
 
 export const basketBottomHeight = 220;
+
+const base = 'https://smarket.nonoco.dev/';
+export const baseUrl = base + 'apps/';
+export const baseCategoryImageUrl = base + 'storage/categories/';
+export const baseProductImageUrl = base + 'storage/products/';
+export const baseCampaignsImageUrl = base + 'storage/campaigns/';

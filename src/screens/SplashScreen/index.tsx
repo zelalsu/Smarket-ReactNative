@@ -1,47 +1,72 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Image} from 'react-native';
-import React, {useEffect} from 'react';
+import {View} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../store';
-import {postData} from '../../utils/helper';
+
 import {setCategories} from '../../store/category';
 import {setProducts} from '../../store/product';
+
+import {
+  useLazyCommonExample2Query,
+  useLazyCommonExample3Query,
+  useLazyCommonExampleQuery,
+} from '../../store/api';
+
+import ModalScreen from '../ModalScreen';
+import {Image} from 'react-native';
 import style from './style';
 
-const base = 'https://smarket.nonoco.dev/';
-export const baseUrl = base + 'apps/';
-export const baseCategoryImageUrl = base + 'storage/categories/';
-export const baseProductImageUrl = base + 'storage/products/';
-export const baseCampaignsImageUrl = base + 'storage/campaigns/';
-
 const SplashScreen = ({navigation}: {navigation: any}) => {
-  const products = useAppSelector(state => state.product.products);
+  const product = useAppSelector(state => state.product.products);
+  const category = useAppSelector(state => state.category.categories);
   const dispatch = useAppDispatch();
-  const categories = useAppSelector(state => state.category.categories);
+  const [status, setStatus] = useState<boolean | undefined>(undefined);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const [trigger] = useLazyCommonExampleQuery();
+  const [trigger2] = useLazyCommonExample2Query();
+  const [trigger3] = useLazyCommonExample3Query();
+  // a?.() //undefined düşerse hata vermiyor.
+
+  const responseHandler = (res: any) => {
+    if (res.isError) {
+      setStatus(false);
+      setErrorMsg(res.error.status);
+      return false;
+    }
+
+    if (res.isSuccess) {
+      setStatus(true);
+      return true;
+    }
+  };
 
   useEffect(() => {
-    if (categories.length === 0 || products.length === 0) {
-      postData({
-        url: `${baseUrl}sm-login-register`,
-        requestData: {phone: '5418581704'},
-      }).then(res => {
-        postData({
-          url: `${baseUrl}sm-verify-code`,
-          requestData: {phone: res.phone, code: '1111'},
-        }).then(response => {
-          // setUser(response.userInfo); //redux at
-          postData({
-            url: `${baseUrl}sm-get-categories-and-products`,
-            requestData: {_token: response.userInfo.authToken},
-          }).then(productsAndCategories => {
-            dispatch(setCategories(productsAndCategories.categories));
-            dispatch(setProducts(productsAndCategories.products));
-            navigation.navigate('TabNavigator');
-          });
-        });
+    if (category.length === 0 || product.length === 0) {
+      trigger({phone: 'phone'}).then(res => {
+        if (responseHandler(res)) {
+          trigger2({phone: res.data?.phone ?? '', code: '1111'}).then(
+            response => {
+              if (responseHandler(response)) {
+                trigger3({
+                  _token: response?.data?.userInfo?.authToken ?? '',
+                }).then(productsAndCategories => {
+                  if (responseHandler(productsAndCategories)) {
+                    dispatch(
+                      setCategories(productsAndCategories.data?.categories),
+                    );
+                    dispatch(setProducts(productsAndCategories.data?.products));
+                    navigation.navigate('LoginScreen');
+                  }
+                });
+              }
+            },
+          );
+        }
       });
     } else {
       setTimeout(() => {
-        navigation.navigate('TabNavigator');
+        navigation.navigate('LoginScreen');
       }, 1000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,12 +80,14 @@ const SplashScreen = ({navigation}: {navigation: any}) => {
           source={require('../../../assets/icons/icon.png')}
         />
       </View>
-      <View style={{backgroundColor: '#fff'}}>
-        <Image
-          resizeMode="contain"
-          source={require('../../../assets/images/splash.png')}
-        />
-      </View>
+
+      <Image
+        style={{backgroundColor: '#fff'}}
+        resizeMode="contain"
+        source={require('../../../assets/images/splash.png')}
+      />
+
+      <ModalScreen errorMsg={errorMsg} status={status} setStatus={setStatus} />
     </>
   );
 };

@@ -7,9 +7,7 @@ import {addToCart, removeToCart} from '../../store/basket';
 import {useDispatch} from 'react-redux';
 import {decreaseQuantity} from '../../store/basket';
 import {FlashList} from '@shopify/flash-list';
-import {basketBottomHeight} from '../../constants';
-const base = 'https://smarket.nonoco.dev/';
-export const baseProductImageUrl = base + 'storage/products/';
+import {baseProductImageUrl, basketBottomHeight} from '../../constants';
 
 const BasketScreen = () => {
   const cart = useAppSelector(state => state.basket.cart);

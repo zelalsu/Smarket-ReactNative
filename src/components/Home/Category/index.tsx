@@ -3,12 +3,7 @@ import {FlashList} from '@shopify/flash-list';
 import {useAppSelector} from '../../../store/index';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import style from './style';
-
-const base = 'https://smarket.nonoco.dev/';
-export const baseUrl = base + 'apps/';
-export const baseCategoryImageUrl = base + 'storage/categories/';
-export const baseProductImageUrl = base + 'storage/products/';
-export const baseCampaignsImageUrl = base + 'storage/campaigns/';
+import {baseCategoryImageUrl} from '../../../constants';
 
 const Category = ({navigation}: {navigation: any}) => {
   const categories = useAppSelector(state => state.category.categories);

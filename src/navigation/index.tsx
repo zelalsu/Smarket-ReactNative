@@ -15,6 +15,10 @@ import Basket from '../../assets/svg/basket.svg';
 import Profile from '../../assets/svg/profile.svg';
 
 import {SvgProps} from 'react-native-svg';
+import LoginScreen from '../screens/LoginScreen';
+import Main from '../components/Login/Main';
+import Telephone from '../components/Login/Login';
+import UserCode from '../components/Login';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +27,12 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} />
+
+        <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen name="Login" component={Telephone} />
+        <Stack.Screen name="UserCode" component={UserCode} />
+
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
