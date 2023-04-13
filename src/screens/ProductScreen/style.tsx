@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
   categoryContainer: {
-    height: 142,
+    height: 193,
     backgroundColor: '#0052DF',
     borderBottomLeftRadius: 10,
     borderBottomStartRadius: 10,
@@ -28,9 +28,9 @@ const style = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
   },
   title: {
-    marginTop: 50,
+    marginTop: 100,
     fontFamily: 'Montserrat-Bold',
-    fontSize: 16,
+    fontSize: 22,
     paddingLeft: 20,
     color: '#fff',
   },

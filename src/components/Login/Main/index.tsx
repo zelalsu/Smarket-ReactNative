@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {View, Text, TouchableOpacity, ImageBackground} from 'react-native';
 import React from 'react';
 import styles from './style';
@@ -7,21 +6,15 @@ const Main = ({navigation}: {navigation: any}) => {
   return (
     <>
       <View style={styles.container}>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={styles.imageContainer}>
           <ImageBackground
-            // eslint-disable-next-line react-native/no-inline-styles
             style={styles.telephoneImage}
-            source={require('../../../../assets/images/phone.jpg')}
+            source={require('@assets/images/phone.jpg')}
           />
         </View>
         <ImageBackground
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{
-            flex: 1,
-            height: 487,
-            marginTop: 210,
-          }}
-          source={require('../../../../assets/images/shadow.png')}
+          style={styles.shadow}
+          source={require('@assets/images/shadow.png')}
         />
         <View style={styles.textContainer}>
           <Text style={styles.text}>
@@ -33,7 +26,7 @@ const Main = ({navigation}: {navigation: any}) => {
         </View>
         <View>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => navigation.navigate('UserPhone')}
             style={styles.button}>
             <Text style={styles.textButton}>Giriş Yap</Text>
           </TouchableOpacity>

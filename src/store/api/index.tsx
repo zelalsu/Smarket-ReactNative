@@ -28,11 +28,26 @@ export const commonApi = createApi({
     }),
     commonExample2: builder.query<
       {
-        userInfo: {authToken: string};
+        result: string;
+        userInfo: {
+          user: {
+            name: string;
+            email: null;
+            phone: string;
+          };
+          authToken: string;
+          transactionList: {
+            mincart: string;
+            maxcart: string;
+            totalAction: number;
+          }[];
+        };
+        msg: string;
       },
       {
         phone: string;
         code: string;
+        name?: string;
       }
     >({
       query: ({...patch}) => ({
@@ -50,10 +65,10 @@ export const commonApi = createApi({
         _token: string;
       }
     >({
-      query: ({_token}) => ({
+      query: ({...patch}) => ({
         url: 'sm-get-categories-and-products',
         method: 'POST',
-        body: {_token},
+        body: patch,
       }),
     }),
   }),

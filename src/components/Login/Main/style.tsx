@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     marginRight: 30,
+    marginBottom: 50,
     marginLeft: 30,
   },
   text: {
@@ -41,9 +42,19 @@ const styles = StyleSheet.create({
   },
   telephoneImage: {
     flex: 1,
-    width: 225,
+    width: 240,
     height: 487,
-    marginTop: 133,
+    marginTop: 120,
+  },
+  shadow: {
+    flex: 1,
+    height: 400,
+    marginTop: 210,
+  },
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

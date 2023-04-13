@@ -8,8 +8,9 @@ import {ProductsParams} from '../../components/Product/type';
 import {useDispatch} from 'react-redux';
 import {addToCart} from '../../store/basket';
 import {baseProductImageUrl} from '../../constants';
+import MainBack from '../../../assets/svg/mainBack.svg';
 
-const ProductScreen = ({route}: {route: any; navigation: any}) => {
+const ProductScreen = ({route, navigation}: {route: any; navigation: any}) => {
   const [subCategoryId, setSubCategoryId] = useState<string | undefined>();
   const {categoryId, title} = route.params;
   const dispatch = useDispatch();
@@ -41,6 +42,11 @@ const ProductScreen = ({route}: {route: any; navigation: any}) => {
       <View style={{backgroundColor: '#fff', flex: 1}}>
         <View style={style.categoryContainer}>
           <View>
+            <TouchableOpacity
+              style={{marginTop: 30, position: 'absolute', marginLeft: 22}}
+              onPress={() => navigation.goBack()}>
+              <MainBack />
+            </TouchableOpacity>
             <Text style={style.title}>{title}</Text>
             <FlashList
               contentContainerStyle={{paddingLeft: 20}}

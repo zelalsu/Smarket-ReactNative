@@ -1,9 +1,25 @@
-import {View, Text, TextInput, ImageBackground, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  ImageBackground,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import style from './style';
 import {Image} from 'react-native';
+import {useAppDispatch} from '../../../store';
+import {userInitialState} from '../../../store/user';
+const Title = ({navigation}: {navigation: any}) => {
+  const dispatch = useAppDispatch();
 
-const Title = () => {
+  const handleClick = () => {
+    dispatch(userInitialState());
+
+    navigation.navigate('Main');
+  };
+
   return (
     <>
       <View style={style.container}>
@@ -15,6 +31,9 @@ const Title = () => {
             <Text style={style.text}>Teslim için</Text>
             <Text style={style.text}>Atıf bey mah Doktor saylan cad...</Text>
           </View>
+          <TouchableOpacity onPress={handleClick}>
+            <Text>çıkışş</Text>
+          </TouchableOpacity>
         </View>
         <View>
           <TextInput placeholder="sebze,meyve" style={style.textInput} />

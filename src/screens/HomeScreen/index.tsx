@@ -7,7 +7,7 @@ const HomeScreen = ({navigation}: {navigation: any}) => {
   return (
     // eslint-disable-next-line react-native/no-inline-styles
     <View style={{backgroundColor: '#fff', flex: 1}}>
-      <Title />
+      <Title navigation={navigation} />
       <Category navigation={navigation} />
     </View>
   );

@@ -17,7 +17,7 @@ import {
 } from 'react-native-gesture-handler';
 
 const cardHeight = 200;
-const ModalScreen = ({
+const DataValidation = ({
   status,
   setStatus,
   errorMsg,
@@ -47,10 +47,8 @@ const ModalScreen = ({
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_, ctx: {startY: number}) => {
       ctx.startY = translateY.value;
-      console.log('aa');
     },
     onActive: (event, ctx) => {
-      console.log('2');
       translateY.value = ctx.startY + event.translationY;
     },
     onEnd: ({velocityY}) => {
@@ -76,7 +74,6 @@ const ModalScreen = ({
     <>
       <Animated.View
         style={[
-          // eslint-disable-next-line react-native/no-inline-styles
           {
             position: 'absolute',
             top: window.height,
@@ -104,4 +101,4 @@ const ModalScreen = ({
   );
 };
 
-export default ModalScreen;
+export default DataValidation;

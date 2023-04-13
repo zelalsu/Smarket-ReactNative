@@ -2,9 +2,9 @@ import {combineReducers} from 'redux';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 
 import productReducer from './product';
-// import userReducer from './user';
 import categoryReducer from './category';
 import basketReducer from './basket';
+import userReducer from './user';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {configureStore} from '@reduxjs/toolkit';
 import {
@@ -24,13 +24,15 @@ const reducers = combineReducers({
   product: productReducer,
   category: categoryReducer,
   basket: basketReducer,
+  token: userReducer,
+
   [commonApi.reducerPath]: commonApi.reducer,
 });
 const persistConfig = {
   //verilerin nasıl depolanacağı ve anahtarların saklanması, sadece logini anahtarı saklanır şuan(white)
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['category', 'product', 'basket'],
+  whitelist: ['category', 'product', 'basket', 'token'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
